@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { authState } from "../store/authState.js";
 import { useRecoilValue } from "recoil";
+import { useNavigate } from "react-router-dom";
 
 interface Todo {
   _id: string;
@@ -12,6 +13,7 @@ interface Todo {
 type TodoArray = Todo[];
 
 const TodoList = () => {
+  const navigate = useNavigate();
   const [todos, setTodos] = useState<TodoArray>([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -64,22 +66,23 @@ const TodoList = () => {
   };
 
   return (
-    <div className="bg-red-300 h-screen flex flex-col justify-center items-center">
+    <div className="bg-indigo-400 h-screen flex flex-col justify-center items-center">
       <div>
         <h2>Welcome {authStateValue.username}</h2>
         <div>
           <button
             onClick={() => {
               localStorage.removeItem("token");
-              window.location = "/login";
+              navigate("/login")
+            //   window.location = "/login";
             }}
           >
             Logout
           </button>
         </div>
       </div>
-      <h2>Todo List</h2>
 
+      <h2 className="text-gray-700 text-2xl font-bold p-4">Todo List</h2>
       <div className="w-full max-w-md">
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div className="mb-4">
